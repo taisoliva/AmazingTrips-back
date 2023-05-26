@@ -52,7 +52,7 @@ export async function joinStateCountry(body) {
 export async function getAllCities(){
 
     const result = await db.query(`
-            SELECT cities.name, states.name AS "stateName",states.sigla AS "stateSigla", 
+            SELECT cities.id, cities.name, states.name AS "stateName",states.sigla AS "stateSigla", 
             country.name AS "countryName", country.sigla AS "countrySigla"
             FROM cities
             JOIN states ON cities."stateId" = states.id

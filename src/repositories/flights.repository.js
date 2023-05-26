@@ -23,7 +23,7 @@ export async function createFlightDB(body, res) {
 export async function getFlights() {
     try {
         const result = await db.query(`
-        SELECT  origem.name AS "Origem", destino.name AS "Destino",
+        SELECT  flights.id, origem.name AS "Origem", destino.name AS "Destino",
 		companies.name AS "company", flights."departureDate", 
 		flights."arrivalDate", flights.price
 		FROM flights
