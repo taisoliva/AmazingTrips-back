@@ -1,4 +1,5 @@
 import { db } from "../database/database.js"
+import dayjs from "dayjs"
 
 export async function createCompanyDB(body) {
     const { name } = body
@@ -21,7 +22,7 @@ export async function createFlightDB(body, res) {
 }
 
 export async function getFlights() {
-    try {
+ 
         const result = await db.query(`
         SELECT  flights.id, origem.name AS "Origem", destino.name AS "Destino",
 		companies.name AS "company", flights."departureDate", 
@@ -32,8 +33,13 @@ export async function getFlights() {
 		JOIN companies ON flights."companyId" = companies.id;
         `)
 
+        setInterval(()=>{
+            removeItems()
+        }, 60000)
         return result
-    } catch (err) {
-        return res.status(500).send(err.message)
-    }
+    
+}
+
+async function removeItems(){
+    await db.query(`DELETE FROM flights WHERE "departureDate" < NOW()`)
 }

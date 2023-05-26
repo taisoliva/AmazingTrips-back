@@ -11,4 +11,5 @@ flightsRouter.post("/company", validateSchema(companySchema), validateCreateComp
 flightsRouter.post("/flights", validateSchema(flightSchema), validateFlight ,createFlight)
 flightsRouter.get("/flights", allFlights)
 
+
 export default flightsRouter

@@ -1,4 +1,5 @@
 import { db } from "../database/database.js"
+import dayjs from "dayjs";
 
 export async function createStateDB(body) {
     const { name, sigla } = body
@@ -58,5 +59,7 @@ export async function getAllCities(){
             JOIN states ON cities."stateId" = states.id
             JOIN country ON cities."countryId" = country.id;
     `)
+
     return result
 }
+

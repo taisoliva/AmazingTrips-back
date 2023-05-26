@@ -20,9 +20,10 @@ export async function createFlight(req, res){
 
 export async function allFlights(req, res){
     try{
-        const flights = await getFlights()
+        const flights = await getFlights(res)
         res.status(200).send(flights.rows)
     } catch(err){
         res.status(500).send(err.message)
     }
 }
+

@@ -1,11 +1,11 @@
 import {Router} from "express";
+import { allCommodities, allHotels, photos } from "../controllers/hotels.controller.js";
 
 const hotelsRouter = Router()
 
-hotelsRouter.post("/hotels")
-hotelsRouter.post("/photos")
-hotelsRouter.post("/commodities")
-hotelsRouter.get("/hotels")
-hotelsRouter.get("/hotels/:id")
+hotelsRouter.get("/hotels", allHotels)
+hotelsRouter.get("/hotels/:id",allCommodities)
+hotelsRouter.get("/photos/:id",photos)
+
 
 export default hotelsRouter
