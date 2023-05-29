@@ -1,4 +1,4 @@
-import { createCompanyDB, createFlightDB, getFlights } from "../repositories/flights.repository.js"
+import { createCompanyDB, createFlightDB, getFlight, getFlights, getPrice } from "../repositories/flights.repository.js"
 
 export async function createCompany(req, res){
     try{
@@ -27,3 +27,23 @@ export async function allFlights(req, res){
     }
 }
 
+export async function rangePrice(req,res){
+
+    const {id} = req.params
+    try{
+        const price = await getPrice(id)
+        res.status(200).send(price.rows[0])
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+export async function Flight(req,res){
+    const {id} = req.params
+    try{
+        const flight = await getFlight(id)
+        res.status(200).send(flight.rows[0])
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}

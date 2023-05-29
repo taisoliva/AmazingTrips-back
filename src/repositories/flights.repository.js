@@ -22,8 +22,8 @@ export async function createFlightDB(body, res) {
 }
 
 export async function getFlights() {
- 
-        const result = await db.query(`
+
+    const result = await db.query(`
         SELECT  flights.id, origem.name AS "Origem", destino.name AS "Destino",
 		companies.name AS "company", flights."departureDate", 
 		flights."arrivalDate", flights.price
@@ -33,13 +33,37 @@ export async function getFlights() {
 		JOIN companies ON flights."companyId" = companies.id;
         `)
 
-        setInterval(()=>{
-            removeItems()
-        }, 60000)
-        return result
-    
+    setInterval(() => {
+        removeItems()
+    }, 60000)
+    return result
+
 }
 
-async function removeItems(){
+async function removeItems() {
     await db.query(`DELETE FROM flights WHERE "departureDate" < NOW()`)
+}
+
+export async function getPrice(id) {
+    const result = await db.query(`
+    SELECT MIN(price) AS menor_valor, MAX(price) AS maior_valor FROM flights 
+		JOIN cities ON cities.id = flights."destinationCityId" 
+		WHERE cities.name = $1;
+    `, [id])
+    return result
+}
+
+export async function getFlight(id) {
+    const result = await db.query(`
+    SELECT  origem.name AS "Origem", destino.name AS "Destino",
+    companies.name AS "company", flights."departureDate", 
+    flights."arrivalDate", flights.price
+    FROM flights
+    JOIN cities AS origem ON flights."departureCityId" = origem.id
+    JOIN cities AS destino ON flights."destinationCityId" = destino.id
+    JOIN companies ON flights."companyId" = companies.id
+    WHERE flights.id = $1;
+    `, [id])
+
+    return result
 }

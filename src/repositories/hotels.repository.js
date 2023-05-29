@@ -3,9 +3,10 @@ import { db } from "../database/database.js";
 export async function getHotels() {
     const result = await db.query(`
     SELECT hotels.id, hotels.name AS "Name", hotels.description AS "Descrição",
-        photos.url, hotels.price
+        photos.url, hotels.price, cities.name
         FROM hotels 
-        JOIN photos ON photos.id = hotels."mainPhoto";
+        JOIN photos ON photos.id = hotels."mainPhoto"
+        JOIN cities ON cities.id = hotels."cityId";
     `)
 
     return result
